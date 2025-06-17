@@ -240,7 +240,7 @@ class Models{
       var cadastroEmail   = $("#cadastroEmail").val();
       var cadastroSenha   = $("#cadastroSenha").val();
       var cadastroCPF     = $("#cadastroCPF").val();
-      var cadastroOAB     = $("#cadastroOAB").val();
+      var cadastroOAB     = 1;//$("#cadastroOAB").val();
 
       var cadastroCelular = localStorage.getItem("celularCadastro");
 
@@ -689,6 +689,8 @@ enviarAtendimento(){
 */
 orcamentosDisponiveis(){
 
+        return;
+
         // CONFIGURAÇÕES AJAX VANILLA
         let xhr = new XMLHttpRequest();
 
@@ -696,7 +698,6 @@ orcamentosDisponiveis(){
          
         xhr.open('POST', app.urlApi+'orcamentos-abertos',true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        //xhr.setRequestHeader('Authorization', 'Bearer ' + app.AlturosToken);
         var params = 'idUsuario='+idUsuario+ 
                      "&token="+app.token;
         

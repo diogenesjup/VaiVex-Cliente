@@ -13,8 +13,8 @@ html,body{
 }
 body{
   overflow-x: hidden;
-    background:#fff;
-    font-family: 'Open Sans', sans-serif;
+  background:#fff;
+  font-family: "Roboto", sans-serif;
 }
 
 @media(max-width: 540px){
@@ -43,7 +43,7 @@ XL = > 1200px
 
 CSS GRID
 -----------------------------------*/
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 .wow {
    visibility: hidden;
@@ -70,12 +70,13 @@ img{
 }
 
 label{
-  font-family: 'Barlow', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #747474;
+  font-size: 14px !important;
 }
 
 .form-control{
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     border-radius: 0px;
     outline: none !important;
     border-radius: 10px;
@@ -92,15 +93,16 @@ label{
 .btn-primary:visited{
     border-radius: 10px;
     outline: none !important;
-    font-family: 'Barlow', sans-serif;
+    
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
     height: 45px;
     padding-top: 5px;
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
-    background: #172d48 !important;
-    border-color: #172d48 !important;
+    background: #1b3686 !important;
+    border-color: #1b3686 !important;
     font-size: 13px;
 }
 
@@ -111,7 +113,7 @@ label{
 .btn-default:visited{
     border-radius: 10px;
     outline: none !important;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
     height: 45px;
     padding-top: 10px !important;
@@ -141,6 +143,7 @@ header{
 
 header .logo{
   padding-top: 10px;
+  text-align:center;
 }
 
 header .logo img{
@@ -152,7 +155,7 @@ header .logo img{
 header .menu-bar-toggle{
   display: none;
   text-align: right;
-  padding-top: 15px;
+  padding-top: 9px;
 }
 
 header .menu-bar-toggle a{
@@ -186,6 +189,7 @@ footer{
   position: fixed;
   display:none;
   background: #fff;
+  background: linear-gradient(90deg, #1B3686 0%, #466CDF 100%);
   z-index:9999;
   left:0;
   bottom:0;
@@ -202,10 +206,10 @@ footer{
 
 footer a,
 footer a:hover{
-  color: #000 !important;
+  color: #fff !important;
   text-decoration: none !important;
-  font-size: 12.5px;
-  font-family: 'Barlow', sans-serif;
+  font-size: 11px;
+  font-family: "Roboto", sans-serif;
   font-weight: 100 !important;
 }
 
@@ -262,10 +266,11 @@ footer .menu-3 img{
     margin-right: auto;
 }
 
-footer .menu-1 img{
-    width: 20px;
-    margin-bottom: -3px;
-    margin-top: -4px;
+footer .menu-1 img,
+footer .menu-1 svg{
+    width: 36px;
+    margin-bottom: -5px;
+    margin-top: -35px;
 }
 
 footer .menu-3 img{
@@ -327,20 +332,21 @@ section#content .view-3{
 .view-login h3,
 .view-login h4,
 .view-login h5{
-   font-family: 'Barlow', sans-serif;
+   font-family: "Roboto", sans-serif;
 }
 
 .view-login h2{
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
     font-size: 26px;
 }
 
 .view-login p{
-  font-family: 'Barlow', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #000;
   font-weight: 300;
   margin-top: -6px;
+  font-size: 14px;
 }
 
 
@@ -349,7 +355,7 @@ section#content .view-3{
 }
 
 .view-inicial h2{
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
     font-size: 20px;
     margin-top: 15px;
@@ -378,6 +384,7 @@ section#content .view-3{
     padding-left: 20px;
     padding-bottom: 14px;
     min-height: 60px;
+    font-size: 14px;
 }
 
 .view-inicial .form-check input:checked + label {
@@ -474,7 +481,7 @@ section#content .view-3{
 
 
 .fechar-menu-cliente a img{
-  width: 22px;
+  width: 16px;
   height: auto;
   filter: grayscale(1);
 }
@@ -576,7 +583,7 @@ section#content .view-3{
 }
 
 .view-dashboard h2{
-  font-family: 'Barlow', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 26px;
   line-height: 33px;
@@ -594,7 +601,7 @@ section#content .view-3{
 
 
 .view-profissional h2{
-  font-family: 'Barlow', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 22px;
   line-height: 26px;
@@ -727,7 +734,7 @@ section#content .view-3{
 }
 
 .loop-novos-servicos .caixa-destaque-servicos h3{
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
     font-size: 16px;
 }
@@ -806,8 +813,9 @@ section#content .view-3{
 .view-comprar-chaves h2,
 .cursos-e-treinamentos h2{
     font-weight: bold;
-    font-size: 23px;
-    font-family: 'Barlow', sans-serif;
+    font-size: 17px;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
 }
 
 .view-comprar-chaves h2 a,
@@ -936,7 +944,7 @@ section#content .view-3{
 }
 
 .view-detalhe-anuncio .caixa-destaque-servicos h2{
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
     font-size: 16px;
     line-height: 26px;
@@ -955,7 +963,7 @@ section#content .view-3{
 .actions-contato .btn-default:visited {
     border-radius: 10px;
     outline: none !important;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: 300;
     height: 45px;
     padding-top: 7px;
@@ -965,7 +973,7 @@ section#content .view-3{
 
     border-radius: 10px;
     outline: none !important;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     height: 45px;
@@ -1086,7 +1094,7 @@ section#content .view-3{
 .view-dashboard nav ul li a{
   text-decoration: none;
   color: #000;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
 
@@ -2367,11 +2375,11 @@ p.apoio-servico{
 }
 
 .nova-recepcao h3.saudacao{
-  text-align: center;
-  font-weight: 400;
-  font-size: 20px;
-  margin-top: 12px;
-  margin-bottom: 32px;
+  text-align: left;
+    font-weight: 400;
+    font-size: 22px;
+    margin-top: 12px;
+    margin-bottom: 6px;
 }
 
 .view-inicial .nova-recepcao .form-check label{
@@ -2479,3 +2487,1042 @@ p.apoio-servico{
   border-radius: 10px;
   margin-bottom: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+ .listagem-entregues-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .listagem-entregues-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .listagem-entregues-tab {
+                padding: 4px 11px;
+                border-radius: 25px;
+                border: 2px solid #072165;
+                background: transparent;
+                color: #072165;
+                font-size: 12px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                flex: 1;
+                text-align: center;
+        }
+
+        .listagem-entregues-tab.active {
+            background: #072165;
+            color: white;
+        }
+
+        .listagem-entregues-tab:hover:not(.active) {
+            background: #f0f0f0;
+        }
+
+        .listagem-entregues-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .listagem-entregues-card {
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .listagem-entregues-card.transit {
+            background: #13f287;
+        }
+
+        .listagem-entregues-card.delivered {
+            background: linear-gradient(135deg, #f2f2f2, #ccc);
+        }
+
+        .listagem-entregues-tracking-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .listagem-entregues-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .listagem-entregues-location {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .listagem-entregues-route-line {
+            flex: 1;
+            height: 2px;
+            background: #333;
+            margin: 0 15px;
+            position: relative;
+            border-style: dashed;
+            border-width: 2px 0 0 0;
+            border-color: #333;
+            background: none;
+        }
+
+        .listagem-entregues-route-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            margin-left: 4px;
+            margin-right: 4px;
+            border: 2px solid #333;
+        }
+
+        .listagem-entregues-package-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            padding: 2px;
+        }
+        .listagem-entregues-package-icon img{
+            width: 32px;
+            height: 32px;
+            filter: invert(1);
+        }
+        /*
+        .listagem-entregues-package-icon::before {
+            content: '📦';
+            font-size: 12px;
+            filter: grayscale(1) brightness(0) invert(1);
+        }
+            */
+
+        .listagem-entregues-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .listagem-entregues-status-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .listagem-entregues-status {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .listagem-entregues-eta-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            text-align: right;
+        }
+
+        .listagem-entregues-eta {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-align: right;
+        }
+
+        .listagem-entregues-hidden {
+            display: none;
+        }
+
+        #map{
+              position: relative;
+              display: block;
+              padding: 0px;
+              background: #f2f2f2;
+              height: calc(100% + 22px);
+              text-align: center;
+              font-size: 13px;
+              margin-top: -22px;
+        }
+
+
+        /* Header com botão voltar */
+        .componentes-mapa-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: transparent;
+            z-index: 25;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 20px 20px;
+        }
+
+        .componentes-mapa-back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .componentes-mapa-back-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
+        }
+
+        .componentes-mapa-back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .componentes-mapa-back-btn::before {
+            content: '←';
+            font-size: 20px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+        .componentes-mapa-background {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 30%, #E8F5E8 70%, #F5F5F5 100%);
+            position: relative;
+        }
+
+        .componentes-mapa-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);
+        }
+
+        /* Marcador do mapa */
+        .componentes-mapa-marker {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            z-index: 10;
+        }
+
+        .componentes-mapa-pin {
+            width: 40px;
+            height: 40px;
+            background: #00BFFF;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 191, 255, 0.4);
+        }
+
+        .componentes-mapa-pin::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Botão de localização */
+        .componentes-mapa-location-btn {
+            position: absolute;
+            top: 22px;
+          left: 20px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 15;
+            transition: transform 0.2s ease;
+        }
+
+        .componentes-mapa-location-btn:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* Container do painel deslizante */
+        .componentes-mapa-panel-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+            transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 20;
+            overflow: hidden;
+        }
+
+        .componentes-mapa-panel-container.expanded {
+            height: 60vh;
+        }
+
+        /* Handle para arrastar */
+        .componentes-mapa-drag-handle {
+            width: 40px;
+            height: 4px;
+            background: #D1D5DB;
+            border-radius: 2px;
+            margin: 12px auto 0;
+            cursor: grab;
+            transition: background-color 0.2s ease;
+        }
+
+        .componentes-mapa-drag-handle:hover {
+            background: #9CA3AF;
+        }
+
+        .componentes-mapa-drag-handle:active {
+            cursor: grabbing;
+        }
+
+        /* Conteúdo do painel */
+        .componentes-mapa-panel-content {
+            padding: 20px;
+            height: calc(100% - 28px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .componentes-mapa-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .componentes-mapa-address-container {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .componentes-mapa-location-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            opacity: 0.6;
+        }
+
+        .componentes-mapa-location-icon::before {
+            content: '📍';
+            font-size: 18px;
+        }
+
+        .componentes-mapa-address-text {
+            color: #4B5563;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .componentes-mapa-confirm-btn {
+            background: #8BC34A;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: auto;
+        }
+
+        .componentes-mapa-confirm-btn:hover {
+            background: #8BC34A;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 191, 255, 0.3);
+        }
+
+        .componentes-mapa-confirm-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Conteúdo extra que aparece quando expandido */
+        .componentes-mapa-expanded-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease 0.1s;
+            margin-top: 0px;
+        }
+
+        .componentes-mapa-panel-container.expanded .componentes-mapa-expanded-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .componentes-mapa-detail-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .componentes-mapa-detail-label {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .componentes-mapa-detail-value {
+            color: #1F2937;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .componentes-mapa-panel-container {
+                height: 140px;
+            }
+            
+            .componentes-mapa-panel-container.expanded {
+                height: 70vh;
+            }
+        }
+
+
+         .actions-rotas-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .actions-rotas-button {
+            background: #F8F9FA;
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            min-width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 70px;
+            max-width: 90px;
+        }
+
+        .actions-rotas-button:hover {
+            background: #E9ECEF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .actions-rotas-button:active {
+            transform: translateY(0);
+            background: #DEE2E6;
+        }
+
+        .actions-rotas-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+            color: #007AFF;
+        }
+
+        .actions-rotas-label {
+            font-size: 12px;
+            color: #007AFF;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Responsividade */
+        @media (max-width: 320px) {
+            .actions-rotas-container {
+                gap: 8px;
+            }
+            
+            .actions-rotas-button {
+                min-width: 65px;
+                max-width: 75px;
+                height: 70px;
+                padding: 12px;
+            }
+            
+            .actions-rotas-icon {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+            
+            .actions-rotas-label {
+                font-size: 11px;
+            }
+        }
+
+        @media (min-width: 480px) {
+            .actions-rotas-button {
+                min-width: 90px;
+                max-width: 100px;
+                height: 90px;
+                padding: 18px;
+            }
+            
+            .actions-rotas-icon {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+            
+            .actions-rotas-label {
+                font-size: 13px;
+            }
+        }
+
+        /* Estados especiais */
+        .actions-rotas-button.active {
+            background: #007AFF;
+        }
+
+        .actions-rotas-button.active .actions-rotas-icon,
+        .actions-rotas-button.active .actions-rotas-label {
+            color: white;
+        }
+
+        .actions-rotas-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .actions-rotas-button:disabled:hover {
+            background: #F8F9FA;
+            transform: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+
+.status-atual-itinerarios{
+    position: relative;
+    display: block;
+    text-align: center;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #153579 0%, #4869CA 100%);
+    width: 100%;
+    height: 110px;
+    padding-top: 40px;
+    margin-top:-12px;
+}
+
+.status-atual-itinerarios p{
+    color:#fff; 
+    font-size: 13px;
+}
+
+#menuBarToogle a svg{
+  width: 36px;
+  height: 36px;
+}
+
+#menuProfileToggle{
+  display: none;
+  padding-top: 5px;
+  text-align: left;
+}
+
+#menuProfileToggle a,
+#menuProfileToggle a:hover{
+  text-decoration: none;
+}
+
+#menuProfileToggle a svg{
+  width: 38px;
+}
+
+.logo-menu-lateral{
+
+}
+
+.logo-menu-lateral img{
+  width: 140px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-adicional-cliente nav ul li a svg{
+  width: 28px;
+  height: auto;
+  float: right;
+  /* margin-bottom: 42px; */
+  margin-top: 17px;
+}
+
+.menu-adicional-cliente nav ul li a small{
+  border-radius: 8px;
+  background: #1B3686;
+  color: #fff;
+  display: block;
+  text-align: center;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  text-transform: uppercase;
+  font-size: 9px;
+  max-width: 200px;
+}
+
+.coluna-menu-rodape{
+  width: 20%;
+  text-align: center;
+  font-size: 10px;
+}
+
+.coluna-menu-rodape a,
+.coluna-menu-rodape a:hover{
+    font-size: 11px;
+    display: block;
+    text-align: center;
+}
+
+.col.menu-2.coluna-menu-rodape.coluna-menu-rodape-principal{
+  padding-top: 16.5px;
+}
+.col.menu-2.coluna-menu-rodape.coluna-menu-rodape-principal svg{
+  position: absolute;
+  top: -62px;
+  left: 50%;
+  z-index: 1;
+  width: 62px;
+  margin-left: -31px;
+}
+.titulo-divisao-sessoes{
+
+}
+
+.titulo-divisao-sessoes h3{
+  font-weight: bold;
+  text-align: center;
+  margin-top: 28px;
+  margin-bottom: 10px;
+  color: #575656;
+  font-size: 16px;
+}
+
+.lista-modalidades{
+   position: relative;
+}
+
+.lista-modalidades .col-6{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.lista-modalidades .caixa{
+  border-radius: 16px;
+  background: #F8F3F3;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 9px;
+  text-align: center;
+}
+
+.lista-modalidades .caixa a,
+.lista-modalidades .caixa a:hover{
+
+}
+
+.lista-modalidades .caixa a img{
+  margin-top: 27px;
+  max-width: 90px;
+  transition: transform 0.3s ease;
+}
+
+.lista-modalidades .caixa a:hover img{
+  transform: scale(1.12); /* Aumenta 12% */
+  transition: transform 0.3s ease;
+}
+
+.banner-ads a,
+.banner-ads a:hover{
+  text-decoration: none;
+}
+
+.banner-ads a img{
+  width: 90%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+ .seletor-modalidade-cliente {
+            background-color: #f5f5f5;
+            padding: 0;
+            padding-bottom: 24px;
+            border-radius: 12px;
+            max-width: 100%;
+            margin: 0 auto;
+            font-family: 'Arial', sans-serif;
+            font-family: "Roboto", sans-serif;
+            margin-top: 20px;
+        }
+
+        .seletor-modalidade-cliente-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0px;
+            flex-wrap: wrap;
+        }
+
+        .seletor-modalidade-cliente-item {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .seletor-modalidade-cliente-radio {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            margin: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .seletor-modalidade-cliente-radio:checked {
+            accent-color: #666;
+        }
+
+        .seletor-modalidade-cliente-icon {
+            width: 120px;
+            height: 120px;
+            margin: 35px auto 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .seletor-modalidade-cliente-item:hover .seletor-modalidade-cliente-icon {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .seletor-modalidade-cliente-icon svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .seletor-modalidade-cliente-text {
+            font-weight: bold;
+            font-size: 12px;
+            color: #1b3686;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .seletor-modalidade-cliente-item:hover .seletor-modalidade-cliente-text {
+            color: #333;
+        }
+
+        /* Estilo para item selecionado */
+        .seletor-modalidade-cliente-item.selected .seletor-modalidade-cliente-icon {
+            background-color: #e8f4fd;
+            border: 2px solid #007cba;
+        }
+
+        .seletor-modalidade-cliente-item.selected .seletor-modalidade-cliente-text {
+            color: #007cba;
+        }
+
+        @media (max-width: 768px) {
+            .seletor-modalidade-cliente-container {
+                display: grid;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .seletor-modalidade-cliente-item {
+                min-width: auto;
+                flex: 1;
+            }
+
+            .seletor-modalidade-cliente-icon {
+                width: 150px;
+                height: 77px;
+                margin: 25px auto 15px;
+            }
+
+            .seletor-modalidade-cliente-icon svg,
+            .seletor-modalidade-cliente-icon img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .seletor-modalidade-cliente-text {
+                font-size: 12px;
+                line-height: 17px;
+            }
+
+
+        }
+
+
+.auto-complete-solic-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .auto-complete-solic-section {
+            margin-bottom: 40px;
+        }
+
+        .auto-complete-solic-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .auto-complete-solic-field-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .auto-complete-solic-field {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .auto-complete-solic-field:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .auto-complete-solic-field.focused {
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+            border: 2px solid #007bff;
+        }
+
+        .auto-complete-solic-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .auto-complete-solic-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #666;
+            background: transparent;
+            font-weight: 500;
+        }
+
+        .auto-complete-solic-input::placeholder {
+            color: #999;
+        }
+
+        .auto-complete-solic-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .auto-complete-solic-suggestion {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .auto-complete-solic-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .auto-complete-solic-suggestion:hover,
+        .auto-complete-solic-suggestion.highlighted {
+            background-color: #f8f9fa;
+        }
+
+        .auto-complete-solic-suggestion-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            opacity: 0.6;
+        }
+
+        .auto-complete-solic-suggestion-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .auto-complete-solic-add-destination {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 15px 0;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .auto-complete-solic-add-destination:hover {
+            color: #007bff;
+        }
+
+        .auto-complete-solic-add-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .auto-complete-solic-loading {
+            padding: 12px 15px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .auto-complete-solic-no-results {
+            padding: 12px 15px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .auto-complete-solic-container {
+                        margin: 0;
+                        padding: 15px;
+                        border: 12px;
+                        background: #f5f5f5;
+                        text-align: left;
+            }
+
+            .auto-complete-solic-field {
+                padding: 12px;
+            }
+
+            .auto-complete-solic-input {
+                font-size: 14px;
+            }
+            .view-comprar-chaves h2, .cursos-e-treinamentos h2 {
+                font-weight: bold;
+                font-size: 14px;
+                font-family: "Roboto", sans-serif;
+                text-align: left;
+                margin-bottom: 4px;
+            }
+
+            .auto-complete-solic-section {
+                margin-bottom: 23px;
+            }
+        }
+
+        .auto-complete-solic-title {
+          font-size: 13px !important;
+        }
+
+        .auto-complete-solic-add-destination{
+          font-size: 13px !important;
+        }
+        .auto-complete-solic-input {
+            font-size: 13px;
+        }

@@ -1,24 +1,24 @@
 {
-  "name": "com.fabricadeplugins.alturos",
+  "name": "com.fabricadeplugins.vaivex",
   "version": "1.0.0",
-  "description": "Alturos",
+  "description": "VaiVex facilit cliente",
   "main": "index.html",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diogenesjup/alturos.git"
+    "url": "git+https://github.com/diogenesjup/VaiVex-Cliente.git"
   },
   "keywords": [
-    "Alturos"
+    "VaiVex facilit cliente"
   ],
-  "author": "Alturos Tecnologia",
+  "author": "VaiVex facilit Tecnologia",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/diogenesjup/alturos/issues"
+    "url": "https://github.com/diogenesjup/VaiVex-Cliente/issues"
   },
-  "homepage": "https://github.com/diogenesjup/alturos.git#readme",
+  "homepage": "https://github.com/diogenesjup/VaiVex-Cliente.git#readme",
   "devDependencies": {
     "cordova-android": "^13.0.0"
   },

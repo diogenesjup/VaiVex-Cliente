@@ -14,11 +14,9 @@ class App {
         
         if(ambiente=="HOMOLOGACAO"){
              
-            this.urlDom = "https://alturos.servidorseguro.cloud/app/www/";
-            this.urlApi = "https://alturos.servidorseguro.cloud/apiservicekeys/";
-            this.urlCdn = "https://alturos.servidorseguro.cloud/cdn/";
-            this.urlApiAlturos = "https://www.cranchi.com.br/appCasosJuridicos/";
-            this.AlturosToken = "76cafc6b8cb33b129591d60abbfba49234f1415c6436712ed063277a47adf61e";
+            this.urlDom = "https://vaivem.servidorseguro.cloud/app/www/";
+            this.urlApi = "https://vaivem.servidorseguro.cloud/apiservicekeys/";
+            this.urlCdn = "https://vaivem.servidorseguro.cloud/cdn/";
 
         }
         if(ambiente=="PRODUCAO"){
@@ -26,12 +24,10 @@ class App {
             this.urlDom = "";
             this.urlApi = "";
             this.urlCdn = "";
-            this.urlApiAlturos = "https://www.cranchi.com.br/appCasosJuridicos/";
-            this.AlturosToken = "76cafc6b8cb33b129591d60abbfba49234f1415c6436712ed063277a47adf61e";
 
         }
 
-        this.urlApiPagto = "https://alturos.servidorseguro.cloud";
+        this.urlApiPagto = "https://vaivem.servidorseguro.cloud";
 
         this.token = token;
         this.tokenSms = tokenSms;

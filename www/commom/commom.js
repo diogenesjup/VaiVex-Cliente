@@ -1,3 +1,8 @@
+
+
+
+
+
 function abrirModalDetalhes(id, caso, valorChaves, grupo) {
 
   document.getElementById('modalTitulo').textContent = 'Caso ' + caso;

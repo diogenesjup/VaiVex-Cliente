@@ -3,19 +3,19 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.fabricadeplugins.alturos"
+        id        = "com.fabricadeplugins.vaivex"
         version   = "1.0.0">
 
         <!-- LEMBRAR DE MUDAR O APP ID ANTES DE SUBIR O APP NAS LOJAS -->
 
-    <name>Alturos</name>
+    <name>VaiVex facilit Cliente</name>
 
     <description>
-        Alturos - Contrate profissionais qualificados perto de você
+        VaiVex facilit Cliente- Serviços de Entrega
     </description>
 
-    <author href="https://alturos.servidorseguro.cloud" email="diogenesjunior.ti@gmail.com">
-        Alturos
+    <author href="https://vaivem.servidorseguro.cloud" email="contato@fabricadeplugins.com.br">
+        VaiVex facilit Cliente
     </author>
  
     <!--<engine name="android" spec="^13.0.0" />-->
@@ -32,7 +32,7 @@
     <preference name="exit-on-suspend" value="false" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
-    <preference name="StatusBarBackgroundColor" value="#000" />
+    <preference name="StatusBarBackgroundColor" value="#072165" />
 
     <!--
     <preference name="splashscreen" value="splash" />
