@@ -20,6 +20,8 @@ class Views{
 
     viewPrincipal(){
 
+            clearInterval(controleD);
+
             this._content.html(`
             
                <div class="row view-inicial inicial" view-name="view-dashboard">
@@ -116,6 +118,7 @@ class Views{
              </a>`);
             $("header #menuProfileToggle").fadeIn(500);
             $("header .menu-bar-toggle").fadeIn(500);
+            $("header #menuBarToogle").fadeIn(500);
             
 
             $("footer").fadeIn(500);
@@ -2489,184 +2492,7 @@ class Views{
                   });
             });
 
-            // Variáveis globais
-        var origemAutocomplete;
-        var destinoAutocomplete;
-        var origemInput = document.getElementById('origem-input');
-        var destinoInput = document.getElementById('destino-input');
-
-        // Inicializa o Google Maps Autocomplete
-        function initAutocomplete() {
-            // Configurações para o Brasil
-            var options = {
-                types: ['address'],
-                componentRestrictions: { country: 'BR' }
-            };
-
-            // Inicializa autocomplete para origem
-            origemAutocomplete = new google.maps.places.Autocomplete(origemInput, options);
-            
-            // Inicializa autocomplete para destino
-            destinoAutocomplete = new google.maps.places.Autocomplete(destinoInput, options);
-
-            // Event listeners para quando um lugar é selecionado
-            origemAutocomplete.addListener('place_changed', function() {
-                handlePlaceSelect(origemAutocomplete, 'origem');
-            });
-
-            destinoAutocomplete.addListener('place_changed', function() {
-                handlePlaceSelect(destinoAutocomplete, 'destino');
-            });
-
-            // Adiciona eventos de foco
-            setupFocusEvents();
-        }
-
-        // Manipula a seleção de um lugar
-        function handlePlaceSelect(autocomplete, tipo) {
-            var place = autocomplete.getPlace();
-            
-            if (!place.geometry) {
-                console.log("Lugar não encontrado: " + place.name);
-                return;
-            }
-
-            // Dados do lugar selecionado
-            var endereco = place.formatted_address;
-            var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();
-
-            console.log(tipo + ' selecionado:', {
-                endereco: endereco,
-                lat: latitude,
-                lng: longitude
-            });
-
-            // Dispara evento customizado
-            var evento = new CustomEvent('endereco-selecionado', {
-                detail: {
-                    tipo: tipo,
-                    endereco: endereco,
-                    coordenadas: {
-                        lat: latitude,
-                        lng: longitude
-                    },
-                    place: place
-                }
-            });
-            
-            document.dispatchEvent(evento);
-        }
-
-        // Configura eventos de foco
-        function setupFocusEvents() {
-            var campos = document.querySelectorAll('.auto-complete-solic-field');
-            
-            origemInput.addEventListener('focus', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                campo.classList.add('focused');
-            });
-
-            origemInput.addEventListener('blur', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                setTimeout(function() {
-                    campo.classList.remove('focused');
-                }, 200);
-            });
-
-            destinoInput.addEventListener('focus', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                campo.classList.add('focused');
-            });
-
-            destinoInput.addEventListener('blur', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                setTimeout(function() {
-                    campo.classList.remove('focused');
-                }, 200);
-            });
-        }
-
-        // Função para adicionar novo destino
-        function adicionarDestino() {
-            var novoDestino = criarNovoDestino();
-            var destinoSection = document.querySelector('.auto-complete-solic-section:last-of-type');
-            var addButton = destinoSection.querySelector('.auto-complete-solic-add-destination');
-            
-            // Insere antes do botão "Adicionar Destino"
-            destinoSection.insertBefore(novoDestino, addButton);
-            
-            // Inicializa autocomplete no novo campo
-            var novoInput = novoDestino.querySelector('.auto-complete-solic-input');
-            var novoAutocomplete = new google.maps.places.Autocomplete(novoInput, {
-                types: ['address'],
-                componentRestrictions: { country: 'BR' }
-            });
-
-            // Event listener para o novo campo
-            novoAutocomplete.addListener('place_changed', function() {
-                handlePlaceSelect(novoAutocomplete, 'destino-adicional');
-            });
-
-            // Eventos de foco para o novo campo
-            novoInput.addEventListener('focus', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                campo.classList.add('focused');
-            });
-
-            novoInput.addEventListener('blur', function() {
-                var campo = this.closest('.auto-complete-solic-field');
-                setTimeout(function() {
-                    campo.classList.remove('focused');
-                }, 200);
-            });
-        }
-
-        // Cria um novo campo de destino
-        function criarNovoDestino() {
-            var wrapper = document.createElement('div');
-            wrapper.className = 'auto-complete-solic-field-wrapper';
-            
-            wrapper.innerHTML = `
-                <div class="auto-complete-solic-field">
-                    <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <input 
-                        type="text" 
-                        class="auto-complete-solic-input" 
-                        placeholder="Novo destino..."
-                        autocomplete="off"
-                    >
-                    <button type="button" onclick="removerDestino(this)" style="background:none;border:none;color:#999;cursor:pointer;padding:5px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
-                        </svg>
-                    </button>
-                </div>
-            `;
-            
-            return wrapper;
-        }
-
-        // Remove um destino adicional
-        function removerDestino(botao) {
-            var wrapper = botao.closest('.auto-complete-solic-field-wrapper');
-            wrapper.remove();
-        }
-
-        // Escuta o evento customizado
-        document.addEventListener('endereco-selecionado', function(e) {
-            console.log('Endereço selecionado:', e.detail);
-            // Aqui você pode fazer o que quiser com os dados do endereço
-        });
-
-        // Fallback caso a API não carregue
-        if (typeof google === 'undefined') {
-            console.warn('Google Maps API não carregada. Substitua SUA_API_KEY pela sua chave real.');
-        }
-
-
+           
 
 
     }
@@ -2809,11 +2635,17 @@ class Views{
             
             `);
 
-            $("footer").hide();
-            $("header .menu-bar-toggle").hide();
-
             this.animarTransicao();
             app.helpers.carregarMascaras();
+
+            controleD = setInterval(function(){ 
+
+               console.log("estamos aqui");
+               $("footer").hide();
+               $("header .menu-bar-toggle").hide();
+               $("#menuProfileToggle").hide();
+
+            }, 1);
         
     }
 
