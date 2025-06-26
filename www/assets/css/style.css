@@ -3354,7 +3354,7 @@ p.apoio-servico{
         .auto-complete-solic-title {
             font-size: 18px;
             font-weight: bold;
-            color: #666;
+            color: #1b3686;
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -3363,6 +3363,16 @@ p.apoio-servico{
         .auto-complete-solic-field-wrapper {
             position: relative;
             margin-bottom: 15px;
+        }
+
+        .auto-complete-solic-field-wrapper select{
+          background-color: #ffffff;
+          border-radius: 8px;
+          width: 100%;
+          height: 48px;
+          text-align: center;
+          border: none;
+          font-size: 13px;
         }
 
         .auto-complete-solic-field {
@@ -3463,14 +3473,16 @@ p.apoio-servico{
             letter-spacing: 0.5px;
         }
 
+        /*
         .auto-complete-solic-add-destination:hover {
             color: #007bff;
         }
+        */
 
         .auto-complete-solic-add-icon {
             width: 20px;
             height: 20px;
-            margin-right: 10px;
+            margin-right: 4px;
         }
 
         .auto-complete-solic-loading {
@@ -3525,4 +3537,479 @@ p.apoio-servico{
         }
         .auto-complete-solic-input {
             font-size: 13px;
+        }
+
+
+
+        /* Layer Autocomplete de Endereço */
+        .layer-auto-complete-endereco-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layer-auto-complete-endereco-overlay.active {
+            transform: translateY(0);
+        }
+
+        .layer-auto-complete-endereco-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #fff;
+        }
+
+        .layer-auto-complete-endereco-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            padding-top: 22px;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .layer-auto-complete-endereco-back {
+            background: none;
+            border: none;
+            padding: 8px;
+            margin-right: 0px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .layer-auto-complete-endereco-back:hover {
+            background-color: #f5f5f5;
+        }
+
+        .layer-auto-complete-endereco-title {
+            flex: 1;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .layer-auto-complete-endereco-search {
+            padding: 16px;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 69px;
+            z-index: 9;
+        }
+
+        .layer-auto-complete-endereco-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #f8f8f8;
+        }
+
+        .layer-auto-complete-endereco-input:focus {
+            border-color: #1B3686;
+            background: #fff;
+        }
+
+        .layer-auto-complete-endereco-confirm {
+            background: #1B3686;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: background-color 0.2s;
+            min-width: 48px;
+            height: 48px;
+        }
+
+        .layer-auto-complete-endereco-confirm:hover {
+            background: #4869CA;
+        }
+
+        .layer-auto-complete-endereco-suggestions {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 16px;
+            background: #fff;
+        }
+
+        .layer-auto-complete-endereco-suggestion {
+            padding: 9px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .layer-auto-complete-endereco-suggestion:hover {
+            background-color: #f8f8f8;
+        }
+
+        .layer-auto-complete-endereco-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .layer-auto-complete-endereco-suggestion-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .layer-auto-complete-endereco-suggestion-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #666;
+        }
+
+        .layer-auto-complete-endereco-suggestion-content {
+            flex: 1;
+        }
+
+        .layer-auto-complete-endereco-suggestion-title {
+            font-size: 13px;
+            color: #333;
+            margin: 0 0 4px 0;
+            font-weight: 500;
+        }
+
+        .layer-auto-complete-endereco-suggestion-subtitle {
+            font-size: 12px;
+            color: #666;
+            margin: 0;
+        }
+
+        .layer-auto-complete-endereco-loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .layer-auto-complete-endereco-empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+
+        .action-solicitar-viagem-ou-entrega{
+
+        }
+
+        .action-solicitar-viagem-ou-entrega button,
+        .action-solicitar-viagem-ou-entrega button:hover,
+        .action-solicitar-viagem-ou-entrega button:active,
+        .action-solicitar-viagem-ou-entrega button:focus,
+        .action-solicitar-viagem-ou-entrega button:visited{
+          background: #289D59 !important;
+          border-color: #289D59 !important;
+        }
+
+        /* Container de destinos adicionais */
+        .auto-complete-solic-destinos-adicionais {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .auto-complete-solic-destino-item {
+            position: relative;
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            cursor: move;
+        }
+
+        .auto-complete-solic-destino-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+
+        .auto-complete-solic-destino-item.drag-over {
+            border: 2px dashed #1B3686;
+            background: #f0f4ff;
+        }
+
+        /* Header do destino */
+        .auto-complete-solic-destino-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .auto-complete-solic-destino-titulo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .auto-complete-solic-destino-drag {
+            width: 24px;
+            height: 24px;
+            cursor: grab;
+            color: #999;
+            transition: color 0.2s;
+        }
+
+        .auto-complete-solic-destino-drag:active {
+            cursor: grabbing;
+        }
+
+        .auto-complete-solic-destino-drag:hover {
+            color: #666;
+        }
+
+        .auto-complete-solic-destino-numero {
+            background: #1B3686;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Botões de ação */
+        .auto-complete-solic-destino-acoes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .auto-complete-solic-destino-remover {
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            color: #e74c3c;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auto-complete-solic-destino-remover:hover {
+            background: #fee;
+            color: #c0392b;
+        }
+
+        /* Campo de input do destino adicional */
+        .auto-complete-solic-destino-field {
+            position: relative;
+        }
+
+        .auto-complete-solic-destino-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .auto-complete-solic-destino-input:hover {
+            border-color: #ccc;
+        }
+
+        .auto-complete-solic-destino-input:focus {
+            outline: none;
+            border-color: #1B3686;
+            box-shadow: 0 0 0 3px rgba(27, 54, 134, 0.1);
+        }
+
+        .auto-complete-solic-destino-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #666;
+        }
+
+        /* Animações */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auto-complete-solic-destino-item {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Placeholder para arrastar */
+        .auto-complete-solic-destino-placeholder {
+            background: #e0e0e0;
+            border: 2px dashed #999;
+            border-radius: 12px;
+            height: 80px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        /* Responsividade */
+        @media (max-width: 400px) {
+            .auto-complete-solic-destino-titulo {
+                font-size: 13px;
+            }
+            
+            .auto-complete-solic-destino-input {
+                font-size: 13px;
+                padding: 10px 14px 10px 40px;
+            }
+        }
+
+
+        .seletor-imagem-camera{
+            position: relative;
+            display: block;
+            text-align: center;
+            padding: 20px;
+            border: 2px dotted #2196F3;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: #d4f2ff;
+        }
+
+        .seletor-imagem-camera img{
+            position: relative;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 58px;
+            margin-bottom: 8px;
+        }
+
+        
+        /*---------------------------------
+          CAMERA
+        -----------------------------------*/
+        .modal-camera{
+          position: fixed;
+          display: none;
+          width: 100%;
+          height: 100%;
+          top:0;
+          left: 0;
+          z-index: 999999;
+          background: rgba(000,000,000,0.35);
+          -webkit-transition:all 300ms ease;-moz-transition:all 300ms ease;transition:all 300ms ease;
+        }
+
+        #areaCamera{
+          border-radius: 12px;
+        }
+
+        .modal-camera .confirmacao{
+          position: absolute;
+          display: block;
+          bottom: -300%;
+          height: auto;
+          min-height: 30%;
+          max-height: 92%;
+          overflow-y: scroll;
+          background: #fff;
+          left: 0;
+          width: 100%;
+          z-index: 999991;
+          padding: 20px;
+          -webkit-transition:all 300ms ease;-moz-transition:all 300ms ease;transition:all 300ms ease;
+        }
+        .modal-camera .confirmacao::-webkit-scrollbar-track {
+                  background-color: #F4F4F4;
+              }
+        .modal-camera .confirmacao::-webkit-scrollbar {
+                  width: 1px;
+                  background: #F4F4F4;
+              }
+        .modal-camera .confirmacao::-webkit-scrollbar-thumb {
+                  background: #ccc;
+              }
+
+
+
+
+        .modal-camera .confirmacao h3{
+          font-family: 'Muli', sans-serif;
+          font-weight: 600;
+          color: #000;
+          margin-top: 1px;
+          margin-bottom: 12px;
+          line-height: 1.15em;
+          font-size: 20px;
+        }
+
+        .modal-camera .confirmacao .col{
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+
+        .modal-camera .confirmacao .col .btn-primary{
+          height: 42px;
+          width: 100%;
+        }
+
+        .modal-camera .confirmacao .col .btn-default{
+            height: 42px;
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+
+
+        .modal-camera p{
+            color: #292929;
+            font-size: 13px;
+            line-height: 19px;
+            margin-bottom: 20px;
+            padding-left: 0px;
         }

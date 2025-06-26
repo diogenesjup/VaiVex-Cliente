@@ -12,7 +12,7 @@
 <title>VaiVex facilit Cliente - Serviços de Entrega</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, ximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
 <meta name="theme-color" content="#072165">
 
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" media="all" />
@@ -91,7 +91,7 @@
     <footer>
         <div class="row">
             <div class="col menu-1 coluna-menu-rodape">
-                <a href="javascript:void(0)" title="Home" onclick="app.viewPrincipal();">
+                <a href="javascript:void(0)" title="Home" onclick="app.views.viewPrincipal();">
                     <svg width="56" height="55" viewBox="0 0 56 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="56" height="55" rx="17" fill="white"/>
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M34.5714 20.5239L37.4824 16.2686C34.791 16.4289 31.536 17.061 28.4129 17.9644C26.2908 18.5784 23.9274 18.4858 21.7302 18.0804C21.0381 17.9527 20.3564 17.7928 19.6964 17.611L21.6735 20.5217C25.7107 22.012 30.5336 22.0127 34.5714 20.5239ZM20.6669 21.9711C25.3119 23.8152 30.944 23.8146 35.5883 21.9694C37.4766 23.9284 39.4272 26.3663 40.93 28.9163C42.5012 31.582 43.493 34.2186 43.5582 36.4832C43.6199 38.6263 42.867 40.4727 40.746 41.8903C38.4983 43.3926 34.5816 44.4968 28.1583 44.559C21.7331 44.6211 17.8104 43.5916 15.5563 42.1343C13.4351 40.7629 12.6675 38.9364 12.7159 36.7813C12.767 34.503 13.7473 31.8286 15.3151 29.1064C16.8118 26.5077 18.7629 24.0052 20.6669 21.9711ZM19.2792 15.7013C20.1595 15.9784 21.092 16.2199 22.0411 16.395C24.0957 16.7741 26.1657 16.8305 27.9367 16.3182C30.1873 15.6671 32.55 15.1395 34.764 14.8269C32.8747 14.205 30.5906 13.7138 28.1748 13.7138C24.6881 13.7138 21.4513 14.7368 19.2792 15.7013ZM17.6382 14.5812C19.956 13.4203 23.8746 12 28.1748 12C32.3953 12 36.2187 13.3681 38.5265 14.5164C38.5653 14.5357 38.6036 14.5549 38.6415 14.5741C39.2633 14.8884 39.7687 15.1839 40.1341 15.4275L36.6171 20.5688C44.7248 28.8572 54.4013 46.0192 28.1748 46.2727C1.94825 46.5261 11.4556 29.1742 19.6338 20.5688L16.1413 15.4275C16.3857 15.2669 16.6914 15.0837 17.0515 14.8875C17.2335 14.7883 17.4293 14.6858 17.6382 14.5812Z" fill="url(#paint0_linear_736_6)"/>
@@ -443,6 +443,74 @@
         </div>
 
 
+    <!-- LAYER AUTOCOMPLETE DE ENDEREÇO -->
+    <div class="layer-auto-complete-endereco-overlay" id="layerAutoCompleteEndereco">
+        <div class="layer-auto-complete-endereco-container">
+            <!-- Header -->
+            <div class="layer-auto-complete-endereco-header">
+                <button class="layer-auto-complete-endereco-back" onclick="fecharLayerAutoComplete()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h3 class="layer-auto-complete-endereco-title" id="layerTitulo">Buscar endereço</h3>
+            </div>
+            
+            <!-- Campo de busca -->
+            <div class="layer-auto-complete-endereco-search">
+                <input 
+                    type="text" 
+                    class="layer-auto-complete-endereco-input" 
+                    id="layerEnderecoInput"
+                    placeholder="Digite o endereço..."
+                    autocomplete="off"
+                >
+                <button class="layer-auto-complete-endereco-confirm" onclick="confirmarEndereco()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Lista de sugestões -->
+            <div class="layer-auto-complete-endereco-suggestions" id="layerSugestoes">
+                <!-- Sugestões serão inseridas dinamicamente aqui -->
+            </div>
+        </div>
+    </div>
+    <!-- LAYER AUTOCOMPLETE DE ENDEREÇO -->
+
+
+    <!-- MODAL CAMERA -->
+    <div class="modal-camera" id="swipemeCamera">
+      <div class="confirmacao">
+
+        <div id="areaCamera" style="position: relative; width: 100%; height: 300px; background: #666;">
+
+          <button id="trocaCamera" onclick="trocarCamera()">
+             <img src="assets/images/8674472_ic_fluent_camera_switch_regular_icon.svg" alt="" />
+          </button>
+
+        </div>
+        <p>&nbsp;</p>
+        
+        
+        <div class="row">
+          <div class="col-12">
+            
+            <button type="button" onclick="trocarCamera()" class="btn btn-default" style="margin-bottom:12px;">Trocar Camêra</button>
+          </div>
+          <div class="col-12">
+             <button type="button" onclick="desligarCamera();" class="btn btn-default">Cancelar</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- MODAL CAMERA -->
+
+
+
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="assets/js/tether.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -452,6 +520,8 @@
     <script type="text/javascript" src="assets/js/jquery.form.js"></script>
 
   
+    <!-- GOOGLE MAPS -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-3RCQBVIkNi9PsHWT60NCI4w4yoi48FQ&libraries=places&region=in"></script>
 
 
     <script src="assets/js/dist/jquery.inputmask.bundle.js"></script>

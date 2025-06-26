@@ -32,7 +32,7 @@ class Views{
                      
                      <div class="status-atual-itinerarios">
                         <p>
-                           Nenhuma entrega em andamento
+                           Nenhuma entrega ou viagem em andamento
                         </p>
                      </div>
 
@@ -56,7 +56,7 @@ class Views{
                         <!-- CAIXA -->
                         <div class="col-6">
                             <div class="caixa">
-                                 <a href="javascript:void(0)" onclick="app.views.solicitar();">
+                                 <a href="javascript:void(0)" onclick="app.views.solicitarMotoTaxi();">
                                     <img src="assets/images/modalidade-2.png" alt="">
                                  </a>
                             </div>
@@ -66,7 +66,7 @@ class Views{
                         <!-- CAIXA -->
                         <div class="col-6">
                             <div class="caixa">
-                                 <a href="javascript:void(0)" onclick="app.views.solicitar();">
+                                 <a href="javascript:void(0)" onclick="app.views.solicitarViagemPassageiro();">
                                     <img src="assets/images/modalidade-3.png" alt="">
                                  </a>
                             </div>
@@ -76,7 +76,7 @@ class Views{
                         <!-- CAIXA -->
                         <div class="col-6">
                             <div class="caixa">
-                                 <a href="javascript:void(0)" onclick="app.views.solicitar();">
+                                 <a href="javascript:void(0)" onclick="app.views.solicitarViagemCarga();">
                                     <img src="assets/images/modalidade-4.png" alt="">
                                  </a>
                             </div>
@@ -2397,6 +2397,21 @@ class Views{
  
                                  <p>&nbsp;</p>
                                  <div class="auto-complete-solic-container">
+
+                                    <!-- Retirada ou envio --> 
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Retirada ou envio</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <select name="tipo-entrega" class="" id="tipoDeEntrega">
+                                                <option value="">Selecione uma opção</option>
+                                                <option value="retirada">Retirada</option>
+                                                <option value="envio">Envio</option>
+                                             </select>
+                                          </div>
+                                    </div>
+                                    <!-- Retirada ou envio -->
+
+
                                     <!-- Origem da Corrida -->
                                     <div class="auto-complete-solic-section">
                                           <h2 class="auto-complete-solic-title">Origem da Corrida</h2>
@@ -2409,7 +2424,7 @@ class Views{
                                                       type="text" 
                                                       class="auto-complete-solic-input" 
                                                       id="origem-input"
-                                                      placeholder="RUA MARIA A DA SILVA 550 - MT CUIABÁ"
+                                                      placeholder="Digite o endereço de origem"
                                                       autocomplete="off"
                                                 >
                                              </div>
@@ -2429,20 +2444,33 @@ class Views{
                                                       type="text" 
                                                       class="auto-complete-solic-input" 
                                                       id="destino-input"
-                                                      placeholder="SISTEMA FAMATO CUIABA - MT"
+                                                      placeholder="Digite o endereço de destino"
                                                       autocomplete="off"
                                                 >
                                              </div>
                                              <div class="auto-complete-solic-suggestions" id="destino-suggestions"></div>
                                           </div>
 
-                                          <!-- Adicionar Destino -->
+                                          <!-- Adicionar Destino
                                           <div class="auto-complete-solic-add-destination" onclick="adicionarDestino()">
                                              <svg class="auto-complete-solic-add-icon" viewBox="0 0 24 24" fill="#666">
                                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                                              </svg>
                                              Adicionar Destino
                                           </div>
+                                          -->
+
+                                          <!-- SOLICITAR ENTREGA -->
+                                          <div class="action-solicitar-viagem-ou-entrega">
+                                             <button 
+                                                type="button" 
+                                                class="btn btn-primary"
+                                                onclick="app.views.aguardeOfertas()"   
+                                             >
+                                                ENVIAR E AGUARDAR OFERTAS
+                                             </button>
+                                          </div>
+                                          <!-- SOLICITAR ENTREGA -->
                                     </div>
                                  </div>
 
@@ -2467,6 +2495,24 @@ class Views{
             `);
 
             this.animarTransicao();
+
+            // PREPARE OS INPUTS DO AUTO COMPLETE
+            setTimeout(() => {
+               const origemInput = document.getElementById('origem-input');
+               const destinoInput = document.getElementById('destino-input');
+               
+               if (origemInput) {
+                  origemInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('origem');
+                  });
+               }
+               
+               if (destinoInput) {
+                  destinoInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('destino');
+                  });
+               }
+            }, 500);
 
             // Adiciona funcionalidade de seleção
             document.querySelectorAll('.seletor-modalidade-cliente-radio').forEach(radio => {
@@ -2496,6 +2542,1024 @@ class Views{
 
 
     }
+
+    aguardeOfertas(){
+
+      this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft text-center" data-wow-delay="0.0s" data-wow-duration="0.3s">
+
+                                 <div id="feedbackSolicitacao" style="margin-bottom:30px;">
+
+                                       <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                                          Aguarde! Estamos processando sua solicitação
+                                       </h2>
+
+                                       <p>
+                                          Isso pode levar alguns minutos
+                                       </p>
+
+                                       <div>
+
+                                             <p style="text-align:center;">
+                                                <img src="assets/images/loading.gif" alt="Carregando" style="width: 24px;height:auto;margin-bottom:30px;" />
+                                             </p>
+                                             <p style="text-align:center;color:#747474;font-size:13px;margin-top:-9px;">
+                                                Carregando
+                                             </p>
+
+                                          </div>
+                                       
+                                 </div>
+                                  
+
+                                  
+
+                                  <p>&nbsp;</p>
+
+                                  <!--
+                                  <div>
+
+                                       <button 
+                                          type="button" 
+                                          class="btn btn-primary"
+                                       >
+                                          Voltar para o início
+                                       </button>
+
+                                  </div>  
+                                  -->
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            this.animarTransicao();
+
+            setTimeout(() => {
+
+               jQuery("#feedbackSolicitacao").html(`
+
+                     <img src="assets/images/modalidade-1.png" style="display:block;margin-left:auto;margin-right:auto;width:90px;height:auto;margin-bottom:20px;">
+                     <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                         Solicitação enviada com sucesso!
+                     </h2>
+
+                     <p>
+                        Em alguns minutos enviaremos ofertas para você! Fique de olho nas notificações do aplicativo
+                     </p>
+
+                     <div>
+
+                        <button 
+                           type="button" 
+                           class="btn btn-primary"
+                           onclick="app.views.viewPrincipal();"
+                        >
+                           Voltar para o início
+                        </button>
+
+                     </div>  
+                  
+               `);
+
+            }, 5000);
+      
+    }
+
+
+
+    solicitarMotoTaxi(){
+       
+       this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft" data-wow-delay="0.0s" data-wow-duration="0.3s">
+                     
+                                  <h2>
+                                     Nova Solicitação de viagem
+                                  </h2>
+
+                                  <!-- MODALIDADES -->
+                                  <div class="seletor-modalidade-cliente">
+                                    <div class="seletor-modalidade-cliente-container">
+                                          <!-- Sem Exigência -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input 
+                                                type="radio" 
+                                                id="sem-exigencia" 
+                                                name="modalidade" 
+                                                class="seletor-modalidade-cliente-radio" value="sem-exigencia" checked>
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-mod-1.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                MOTO TAXI
+                                             </div>
+                                          </div>
+
+                                          
+                                    </div>
+                                 </div>
+                                 <!-- MODALIDADES -->
+ 
+                                 <p>&nbsp;</p>
+                                 <div class="auto-complete-solic-container">
+
+                                    <!-- Origem da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Origem da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="origem-input"
+                                                      placeholder="Digite o endereço de origem"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="origem-suggestions"></div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Destino da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Destino da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="destino-input"
+                                                      placeholder="Digite o endereço de destino"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="destino-suggestions"></div>
+                                          </div>
+
+                                          <!-- Adicionar Destino -->
+                                          <div class="auto-complete-solic-add-destination" onclick="adicionarDestino()">
+                                             <svg class="auto-complete-solic-add-icon" viewBox="0 0 24 24" fill="#666">
+                                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                             </svg>
+                                             Adicionar Destino
+                                          </div>
+                                          <!-- Adicionar Destino -->
+
+                                          <!-- SOLICITAR ENTREGA -->
+                                          <div class="action-solicitar-viagem-ou-entrega">
+                                             <button 
+                                                type="button" 
+                                                class="btn btn-primary"
+                                                onclick="app.views.aguardeOfertasMotoTaxi()"   
+                                             >
+                                                ENVIAR E AGUARDAR OFERTAS
+                                             </button>
+                                          </div>
+                                          <!-- SOLICITAR ENTREGA -->
+                                    </div>
+                                 </div>
+
+
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            $("header #menuProfileToggle").html(`
+               <a href="javascript:void(0)" onclick="app.inicio()">
+                  <svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="30" rx="11" fill="#F8F3F3"/>
+                  <path d="M6.62492 15.0392C6.23508 14.648 6.23619 14.0148 6.6274 13.625L13.0026 7.27223C13.3938 6.88239 14.0269 6.88351 14.4168 7.27472C14.8066 7.66593 14.8055 8.29909 14.4143 8.68893L8.74748 14.3358L14.3944 20.0026C14.7842 20.3938 14.7831 21.027 14.3919 21.4168C14.0007 21.8067 13.3675 21.8056 12.9777 21.4143L6.62492 15.0392ZM25.3438 15.365L7.33151 15.3333L7.33503 13.3333L25.3473 13.365L25.3438 15.365Z" fill="#868686"/>
+                  </svg>
+               </a>   
+            `);
+
+            this.animarTransicao();
+
+            // PREPARE OS INPUTS DO AUTO COMPLETE
+            setTimeout(() => {
+               const origemInput = document.getElementById('origem-input');
+               const destinoInput = document.getElementById('destino-input');
+               
+               if (origemInput) {
+                  origemInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('origem');
+                  });
+               }
+               
+               if (destinoInput) {
+                  destinoInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('destino');
+                  });
+               }
+            }, 500);
+
+            // Resetar destinos adicionais ao carregar a view
+            resetarDestinosAdicionais();
+
+            // onclick="app.views.aguardeOfertasMotoTaxi(obterTodosEnderecos())" (FUTURO)
+
+
+
+            // Adiciona funcionalidade de seleção
+            document.querySelectorAll('.seletor-modalidade-cliente-radio').forEach(radio => {
+                  radio.addEventListener('change', function() {
+                     // Remove seleção de todos os items
+                     document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                        item.classList.remove('selected');
+                     });
+                     
+                     // Adiciona seleção ao item atual
+                     if (this.checked) {
+                        this.closest('.seletor-modalidade-cliente-item').classList.add('selected');
+                     }
+                  });
+            });
+
+            // Permite clicar no item inteiro para selecionar
+            document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                  item.addEventListener('click', function() {
+                     const radio = this.querySelector('.seletor-modalidade-cliente-radio');
+                     radio.checked = true;
+                     radio.dispatchEvent(new Event('change'));
+                  });
+            });
+
+           
+
+
+    }
+
+
+    aguardeOfertasMotoTaxi(){
+
+      this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft text-center" data-wow-delay="0.0s" data-wow-duration="0.3s">
+
+                                 <div id="feedbackSolicitacao" style="margin-bottom:30px;">
+
+                                       <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                                          Aguarde! Estamos processando sua solicitação
+                                       </h2>
+
+                                       <p>
+                                          Isso pode levar alguns minutos
+                                       </p>
+
+                                       <div>
+
+                                             <p style="text-align:center;">
+                                                <img src="assets/images/loading.gif" alt="Carregando" style="width: 24px;height:auto;margin-bottom:30px;" />
+                                             </p>
+                                             <p style="text-align:center;color:#747474;font-size:13px;margin-top:-9px;">
+                                                Carregando
+                                             </p>
+
+                                          </div>
+                                       
+                                 </div>
+                                  
+
+                                  
+
+                                  <p>&nbsp;</p>
+
+                                  <!--
+                                  <div>
+
+                                       <button 
+                                          type="button" 
+                                          class="btn btn-primary"
+                                       >
+                                          Voltar para o início
+                                       </button>
+
+                                  </div>  
+                                  -->
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            this.animarTransicao();
+
+            setTimeout(() => {
+
+               jQuery("#feedbackSolicitacao").html(`
+
+                     <img src="assets/images/modalidade-2.png" style="display:block;margin-left:auto;margin-right:auto;width:90px;height:auto;margin-bottom:20px;">
+                     <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                         Solicitação enviada com sucesso!
+                     </h2>
+
+                     <p>
+                        Em alguns minutos enviaremos ofertas para você! Fique de olho nas notificações do aplicativo
+                     </p>
+
+                     <div>
+
+                        <button 
+                           type="button" 
+                           class="btn btn-primary"
+                           onclick="app.views.viewPrincipal();"
+                        >
+                           Voltar para o início
+                        </button>
+
+                     </div>  
+                  
+               `);
+
+            }, 5000);
+      
+    }
+
+
+
+
+
+
+    
+    solicitarViagemPassageiro(){
+       
+       this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft" data-wow-delay="0.0s" data-wow-duration="0.3s">
+                     
+                                  <h2>
+                                     Nova Solicitação de viagem
+                                  </h2>
+
+                                  <!-- MODALIDADES -->
+                                  <div class="seletor-modalidade-cliente">
+                                    <div class="seletor-modalidade-cliente-container">
+
+                                          <!-- Sem Exigência -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input 
+                                                type="radio" 
+                                                id="sem-exigencia" 
+                                                name="modalidade" 
+                                                class="seletor-modalidade-cliente-radio" value="sem-exigencia" checked>
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-mod-1.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                SEM EXIGÊNCIA
+                                             </div>
+                                          </div>
+                                          <!-- Sem Exigência -->
+
+
+                                          <!-- SEDAN -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input 
+                                                type="radio" 
+                                                id="sedan" 
+                                                name="modalidade" 
+                                                class="seletor-modalidade-cliente-radio" value="sedan">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-sedan.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                SEDAN
+                                             </div>
+                                          </div>
+                                          <!-- SEDAN -->
+
+                                          <!-- HATCH -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input 
+                                                type="radio" 
+                                                id="hatch" 
+                                                name="modalidade" 
+                                                class="seletor-modalidade-cliente-radio" value="hactch">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-hatch.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                HATCH
+                                             </div>
+                                          </div>
+                                          <!-- HATCH -->
+
+                                          <!-- SUV -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input 
+                                                type="radio" 
+                                                id="suv" 
+                                                name="modalidade" 
+                                                class="seletor-modalidade-cliente-radio" value="suv">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-suv.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                SUV
+                                             </div>
+                                          </div>
+                                          <!-- SUV -->
+
+                                    </div>
+                                 </div>
+                                 <!-- MODALIDADES -->
+ 
+                                 <p>&nbsp;</p>
+                                 <div class="auto-complete-solic-container">
+
+                                    <!-- Origem da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Origem da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="origem-input"
+                                                      placeholder="Digite o endereço de origem"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="origem-suggestions"></div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Destino da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Destino da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="destino-input"
+                                                      placeholder="Digite o endereço de destino"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="destino-suggestions"></div>
+                                          </div>
+
+                                          <!-- Adicionar Destino -->
+                                          <div class="auto-complete-solic-add-destination" onclick="adicionarDestino()">
+                                             <svg class="auto-complete-solic-add-icon" viewBox="0 0 24 24" fill="#666">
+                                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                             </svg>
+                                             Adicionar Destino
+                                          </div>
+                                          <!-- Adicionar Destino -->
+
+                                          <!-- SOLICITAR ENTREGA -->
+                                          <div class="action-solicitar-viagem-ou-entrega">
+                                             <button 
+                                                type="button" 
+                                                class="btn btn-primary"
+                                                onclick="app.views.aguardeOfertasViagemPassageiro()"   
+                                             >
+                                                ENVIAR E AGUARDAR OFERTAS
+                                             </button>
+                                          </div>
+                                          <!-- SOLICITAR ENTREGA -->
+                                    </div>
+                                 </div>
+
+
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            $("header #menuProfileToggle").html(`
+               <a href="javascript:void(0)" onclick="app.inicio()">
+                  <svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="30" rx="11" fill="#F8F3F3"/>
+                  <path d="M6.62492 15.0392C6.23508 14.648 6.23619 14.0148 6.6274 13.625L13.0026 7.27223C13.3938 6.88239 14.0269 6.88351 14.4168 7.27472C14.8066 7.66593 14.8055 8.29909 14.4143 8.68893L8.74748 14.3358L14.3944 20.0026C14.7842 20.3938 14.7831 21.027 14.3919 21.4168C14.0007 21.8067 13.3675 21.8056 12.9777 21.4143L6.62492 15.0392ZM25.3438 15.365L7.33151 15.3333L7.33503 13.3333L25.3473 13.365L25.3438 15.365Z" fill="#868686"/>
+                  </svg>
+               </a>   
+            `);
+
+            this.animarTransicao();
+
+            // PREPARE OS INPUTS DO AUTO COMPLETE
+            setTimeout(() => {
+               const origemInput = document.getElementById('origem-input');
+               const destinoInput = document.getElementById('destino-input');
+               
+               if (origemInput) {
+                  origemInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('origem');
+                  });
+               }
+               
+               if (destinoInput) {
+                  destinoInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('destino');
+                  });
+               }
+            }, 500);
+
+            // Resetar destinos adicionais ao carregar a view
+            resetarDestinosAdicionais();
+
+            // onclick="app.views.aguardeOfertasMotoTaxi(obterTodosEnderecos())" (FUTURO)
+
+
+
+            // Adiciona funcionalidade de seleção
+            document.querySelectorAll('.seletor-modalidade-cliente-radio').forEach(radio => {
+                  radio.addEventListener('change', function() {
+                     // Remove seleção de todos os items
+                     document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                        item.classList.remove('selected');
+                     });
+                     
+                     // Adiciona seleção ao item atual
+                     if (this.checked) {
+                        this.closest('.seletor-modalidade-cliente-item').classList.add('selected');
+                     }
+                  });
+            });
+
+            // Permite clicar no item inteiro para selecionar
+            document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                  item.addEventListener('click', function() {
+                     const radio = this.querySelector('.seletor-modalidade-cliente-radio');
+                     radio.checked = true;
+                     radio.dispatchEvent(new Event('change'));
+                  });
+            });
+
+           
+
+
+    }
+
+
+    aguardeOfertasViagemPassageiro(){
+
+      this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft text-center" data-wow-delay="0.0s" data-wow-duration="0.3s">
+
+                                 <div id="feedbackSolicitacao" style="margin-bottom:30px;">
+
+                                       <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                                          Aguarde! Estamos processando sua solicitação
+                                       </h2>
+
+                                       <p>
+                                          Isso pode levar alguns minutos
+                                       </p>
+
+                                       <div>
+
+                                             <p style="text-align:center;">
+                                                <img src="assets/images/loading.gif" alt="Carregando" style="width: 24px;height:auto;margin-bottom:30px;" />
+                                             </p>
+                                             <p style="text-align:center;color:#747474;font-size:13px;margin-top:-9px;">
+                                                Carregando
+                                             </p>
+
+                                          </div>
+                                       
+                                 </div>
+                                  
+
+                                  
+
+                                  <p>&nbsp;</p>
+
+                                  <!--
+                                  <div>
+
+                                       <button 
+                                          type="button" 
+                                          class="btn btn-primary"
+                                       >
+                                          Voltar para o início
+                                       </button>
+
+                                  </div>  
+                                  -->
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            this.animarTransicao();
+
+            setTimeout(() => {
+
+               jQuery("#feedbackSolicitacao").html(`
+
+                     <img src="assets/images/modalidade-3.png" style="display:block;margin-left:auto;margin-right:auto;width:90px;height:auto;margin-bottom:20px;">
+                     <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                         Solicitação enviada com sucesso!
+                     </h2>
+
+                     <p>
+                        Em alguns minutos enviaremos ofertas para você! Fique de olho nas notificações do aplicativo
+                     </p>
+
+                     <div>
+
+                        <button 
+                           type="button" 
+                           class="btn btn-primary"
+                           onclick="app.views.viewPrincipal();"
+                        >
+                           Voltar para o início
+                        </button>
+
+                     </div>  
+                  
+               `);
+
+            }, 5000);
+      
+    }
+
+
+
+    
+    solicitarViagemCarga(){
+       
+       this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft" data-wow-delay="0.0s" data-wow-duration="0.3s">
+                     
+                                  <h2>
+                                     Nova Solicitação de transporte
+                                  </h2>
+
+                                  <!-- MODALIDADES -->
+                                  <div class="seletor-modalidade-cliente">
+                                    <div class="seletor-modalidade-cliente-container">
+                                          <!-- Sem Exigência -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input type="radio" id="sem-exigencia" name="modalidade" class="seletor-modalidade-cliente-radio" value="sem-exigencia">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-mod-1.png">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                SEM EXIGÊNCIA
+                                             </div>
+                                          </div>
+
+                                          <!-- PEQUENO ATÉ 600KG -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input type="radio" id="mochila-comum" name="modalidade" class="seletor-modalidade-cliente-radio" value="mochila-comum">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-600.png" alt="">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                PEQUENO ATÉ 600KG
+                                             </div>
+                                          </div>
+
+                                          <!-- MÉDIO ATÉ 1200KG -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input type="radio" id="mochila-termica" name="modalidade" class="seletor-modalidade-cliente-radio" value="mochila-termica">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-1200.png" alt="">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                MÉDIO ATÉ 1200KG
+                                             </div>
+                                          </div>
+
+                                          <!-- GRANDE ATÉ 4000KG -->
+                                          <div class="seletor-modalidade-cliente-item">
+                                             <input type="radio" id="bau-fibra" name="modalidade" class="seletor-modalidade-cliente-radio" value="bau-fibra">
+                                             <div class="seletor-modalidade-cliente-icon">
+                                                <img src="assets/images/es-4000.png" alt="">
+                                             </div>
+                                             <div class="seletor-modalidade-cliente-text">
+                                                GRANDE ATÉ 4000KG
+                                             </div>
+                                          </div>
+                                    </div>
+                                 </div>
+                                 <!-- MODALIDADES -->
+ 
+                                 <p>&nbsp;</p>
+                                 <div class="auto-complete-solic-container">
+
+                                    <!-- Retirada ou envio --> 
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Retirada ou envio</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <select name="tipo-entrega" class="" id="tipoDeEntrega">
+                                                <option value="">Selecione uma opção</option>
+                                                <option value="retirada">Retirada</option>
+                                                <option value="envio">Envio</option>
+                                             </select>
+                                          </div>
+                                    </div>
+                                    <!-- Retirada ou envio -->
+
+                                    <!-- Tipo de Carroceria --> 
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Tipo de carroceria</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <select name="tipo-carroceria" class="" id="tipoDeCarroceria">
+                                                <option value="">Selecione uma opção</option>
+                                                <option value="Sem exigência">Sem exigência</option>
+                                                <option value="Carroceria Aberta">Carroceria Aberta</option>
+                                                <option value="Carroceria Fechada">Carroceria Fechada</option>
+                                             </select>
+                                          </div>
+                                    </div>
+                                    <!-- Tipo de Carroceria -->
+
+                                    <!-- Origem da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Origem da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="origem-input"
+                                                      placeholder="Digite o endereço de origem"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="origem-suggestions"></div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Destino da Corrida -->
+                                    <div class="auto-complete-solic-section">
+                                          <h2 class="auto-complete-solic-title">Destino da Corrida</h2>
+                                          <div class="auto-complete-solic-field-wrapper">
+                                             <div class="auto-complete-solic-field">
+                                                <svg class="auto-complete-solic-icon" viewBox="0 0 24 24" fill="#666">
+                                                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                                </svg>
+                                                <input 
+                                                      type="text" 
+                                                      class="auto-complete-solic-input" 
+                                                      id="destino-input"
+                                                      placeholder="Digite o endereço de destino"
+                                                      autocomplete="off"
+                                                >
+                                             </div>
+                                             <div class="auto-complete-solic-suggestions" id="destino-suggestions"></div>
+                                          </div>
+
+                                          <!-- Adicionar Destino
+                                          <div class="auto-complete-solic-add-destination" onclick="adicionarDestino()">
+                                             <svg class="auto-complete-solic-add-icon" viewBox="0 0 24 24" fill="#666">
+                                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                             </svg>
+                                             Adicionar Destino
+                                          </div>
+                                          -->
+
+                                          <!-- INIT CAMERA -->
+                                          <div 
+                                             class="seletor-imagem-camera"
+                                             onclick="ativarCameraOCR()"
+                                          >
+                                             <img src="assets/images/es-camera.png">
+                                             Tirar fotos da carga
+                                          </div>
+                                          <!-- INIT CAMERA -->
+
+                                          <!-- SOLICITAR ENTREGA -->
+                                          <div class="action-solicitar-viagem-ou-entrega">
+                                             <button 
+                                                type="button" 
+                                                class="btn btn-primary"
+                                                onclick="app.views.aguardeOfertasCarga()"   
+                                             >
+                                                ENVIAR E AGUARDAR OFERTAS
+                                             </button>
+                                          </div>
+                                          <!-- SOLICITAR ENTREGA -->
+                                    </div>
+                                 </div>
+
+
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            $("header #menuProfileToggle").html(`
+               <a href="javascript:void(0)" onclick="app.inicio()">
+                  <svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="30" rx="11" fill="#F8F3F3"/>
+                  <path d="M6.62492 15.0392C6.23508 14.648 6.23619 14.0148 6.6274 13.625L13.0026 7.27223C13.3938 6.88239 14.0269 6.88351 14.4168 7.27472C14.8066 7.66593 14.8055 8.29909 14.4143 8.68893L8.74748 14.3358L14.3944 20.0026C14.7842 20.3938 14.7831 21.027 14.3919 21.4168C14.0007 21.8067 13.3675 21.8056 12.9777 21.4143L6.62492 15.0392ZM25.3438 15.365L7.33151 15.3333L7.33503 13.3333L25.3473 13.365L25.3438 15.365Z" fill="#868686"/>
+                  </svg>
+               </a>   
+            `);
+
+            this.animarTransicao();
+
+            // PREPARE OS INPUTS DO AUTO COMPLETE
+            setTimeout(() => {
+               const origemInput = document.getElementById('origem-input');
+               const destinoInput = document.getElementById('destino-input');
+               
+               if (origemInput) {
+                  origemInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('origem');
+                  });
+               }
+               
+               if (destinoInput) {
+                  destinoInput.addEventListener('click', function() {
+                        abrirLayerAutoComplete('destino');
+                  });
+               }
+            }, 500);
+
+            // Adiciona funcionalidade de seleção
+            document.querySelectorAll('.seletor-modalidade-cliente-radio').forEach(radio => {
+                  radio.addEventListener('change', function() {
+                     // Remove seleção de todos os items
+                     document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                        item.classList.remove('selected');
+                     });
+                     
+                     // Adiciona seleção ao item atual
+                     if (this.checked) {
+                        this.closest('.seletor-modalidade-cliente-item').classList.add('selected');
+                     }
+                  });
+            });
+
+            // Permite clicar no item inteiro para selecionar
+            document.querySelectorAll('.seletor-modalidade-cliente-item').forEach(item => {
+                  item.addEventListener('click', function() {
+                     const radio = this.querySelector('.seletor-modalidade-cliente-radio');
+                     radio.checked = true;
+                     radio.dispatchEvent(new Event('change'));
+                  });
+            });
+
+           
+
+
+    }
+
+    aguardeOfertasCarga(){
+
+      this._content.html(`
+            
+               <div class="row view-comprar-chaves cursos-e-treinamentos cursos-e-treinamentos-aula" view-name="view-2">
+                  <div class="col-12 wow fadeInLeft text-center" data-wow-delay="0.0s" data-wow-duration="0.3s">
+
+                                 <div id="feedbackSolicitacao" style="margin-bottom:30px;">
+
+                                       <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                                          Aguarde! Estamos processando sua solicitação
+                                       </h2>
+
+                                       <p>
+                                          Isso pode levar alguns minutos
+                                       </p>
+
+                                       <div>
+
+                                             <p style="text-align:center;">
+                                                <img src="assets/images/loading.gif" alt="Carregando" style="width: 24px;height:auto;margin-bottom:30px;" />
+                                             </p>
+                                             <p style="text-align:center;color:#747474;font-size:13px;margin-top:-9px;">
+                                                Carregando
+                                             </p>
+
+                                          </div>
+                                       
+                                 </div>
+                                  
+
+                                  
+
+                                  <p>&nbsp;</p>
+
+                                  <!--
+                                  <div>
+
+                                       <button 
+                                          type="button" 
+                                          class="btn btn-primary"
+                                       >
+                                          Voltar para o início
+                                       </button>
+
+                                  </div>  
+                                  -->
+
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+                                 <p>&nbsp;</p>
+
+                  </div>
+               </div>
+            
+            `);
+
+            this.animarTransicao();
+
+            setTimeout(() => {
+
+               jQuery("#feedbackSolicitacao").html(`
+
+                     <img src="assets/images/modalidade-4.png" style="display:block;margin-left:auto;margin-right:auto;width:90px;height:auto;margin-bottom:20px;">
+                     <h2 style="text-align:center;text-align: center;font-size: 24px;">
+                         Solicitação enviada com sucesso!
+                     </h2>
+
+                     <p>
+                        Em alguns minutos enviaremos ofertas para você! Fique de olho nas notificações do aplicativo
+                     </p>
+
+                     <div>
+
+                        <button 
+                           type="button" 
+                           class="btn btn-primary"
+                           onclick="app.views.viewPrincipal();"
+                        >
+                           Voltar para o início
+                        </button>
+
+                     </div>  
+                  
+               `);
+
+            }, 5000);
+      
+    }
+
 
 
     duvidasESuporte(){
@@ -2606,7 +3670,7 @@ class Views{
 
                      <div class="form-group link-apoio text-center">
                             <a href="javascript:void(0)" title="Versão do Aplicativo" style="padding-top:20px;font-size:13px;">
-                               Versão 1.0.0
+                               Versão 1.0.2
                             </a>
                      </div>
      

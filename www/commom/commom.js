@@ -1,7 +1,563 @@
+// AUTO COMPLETE ENDEREÇO
+// Variáveis globais para o autocomplete
+let autoCompleteService = null;
+let geocoder = null;
+let campoAtual = null;
+let enderecoSelecionado = null;
+let searchTimeout = null;
+
+// Inicializar serviços do Google Maps quando a API carregar
+function initAutoCompleteServices() {
+    if (typeof google !== 'undefined' && google.maps) {
+        autoCompleteService = new google.maps.places.AutocompleteService();
+        geocoder = new google.maps.Geocoder();
+    }
+}
+
+// Abrir layer de autocomplete
+function abrirLayerAutoComplete(campo) {
+    campoAtual = campo;
+    const layer = document.getElementById('layerAutoCompleteEndereco');
+    const input = document.getElementById('layerEnderecoInput');
+    const titulo = document.getElementById('layerTitulo');
+    
+    // Definir título baseado no campo
+    if (campo === 'origem') {
+        titulo.textContent = 'Defina o endereço de origem';
+    } else {
+        titulo.textContent = 'Define o endereço de destino';
+    }
+    
+    // Pegar valor atual do campo
+    const valorAtual = document.getElementById(`${campo}-input`).value;
+    input.value = valorAtual;
+    
+    // Abrir layer
+    layer.classList.add('active');
+    
+    // Focar no input após animação
+    setTimeout(() => {
+        input.focus();
+        if (valorAtual) {
+            buscarEnderecos(valorAtual);
+        }
+    }, 300);
+}
+
+// Fechar layer de autocomplete
+function fecharLayerAutoComplete() {
+    const layer = document.getElementById('layerAutoCompleteEndereco');
+    layer.classList.remove('active');
+    
+    // Limpar após animação
+    setTimeout(() => {
+        document.getElementById('layerEnderecoInput').value = '';
+        document.getElementById('layerSugestoes').innerHTML = '';
+        campoAtual = null;
+        enderecoSelecionado = null;
+    }, 300);
+}
+
+// Confirmar endereço selecionado
+function confirmarEnderecoAntiga() {
+    const input = document.getElementById('layerEnderecoInput');
+    const endereco = enderecoSelecionado || input.value;
+    
+    if (endereco && campoAtual) {
+        // Colocar endereço no campo correspondente
+        document.getElementById(`${campoAtual}-input`).value = endereco;
+        
+        // Fechar layer
+        fecharLayerAutoComplete();
+    }
+}
+
+confirmarEndereco = function() {
+    const input = document.getElementById('layerEnderecoInput');
+    const endereco = enderecoSelecionado || input.value;
+    
+    if (endereco && campoAtual) {
+        // Verificar se é um destino adicional
+        const destinoAdicional = destinosAdicionais.find(d => d.id === campoAtual);
+        
+        if (destinoAdicional) {
+            // Atualizar endereço do destino adicional
+            destinoAdicional.endereco = endereco;
+            document.getElementById(`${campoAtual}-input`).value = endereco;
+        } else {
+            // Comportamento original para origem e destino principal
+            document.getElementById(`${campoAtual}-input`).value = endereco;
+        }
+        
+        // Fechar layer
+        fecharLayerAutoComplete();
+    }
+};
+
+const confirmarEnderecoOriginal = confirmarEndereco;
+
+// Função para obter todos os endereços (origem, destino principal e paradas)
+function obterTodosEnderecos() {
+    const enderecos = {
+        origem: document.getElementById('origem-input').value,
+        destinos: [
+            document.getElementById('destino-input').value,
+            ...destinosAdicionais.map(d => d.endereco)
+        ].filter(e => e) // Remove endereços vazios
+    };
+    
+    return enderecos;
+}
+
+// Função para resetar destinos adicionais (útil ao mudar de tela)
+function resetarDestinosAdicionais() {
+    destinosAdicionais = [];
+    destinoIdCounter = 1;
+    elementoArrastando = null;
+}
+
+
+
+
+// Buscar endereços
+function buscarEnderecos(query) {
+    if (!query || query.length < 3) {
+        document.getElementById('layerSugestoes').innerHTML = '';
+        return;
+    }
+    
+    // Mostrar loading
+    document.getElementById('layerSugestoes').innerHTML = `
+        <div class="layer-auto-complete-endereco-loading">
+            Buscando endereços...
+        </div>
+    `;
+    
+    // Cancelar busca anterior
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    
+    // Aguardar um pouco antes de buscar (debounce)
+    searchTimeout = setTimeout(() => {
+        if (autoCompleteService) {
+            const request = {
+                input: query,
+                componentRestrictions: { country: 'br' },
+                language: 'pt-BR'
+            };
+            
+            autoCompleteService.getPlacePredictions(request, (predictions, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+                    mostrarSugestoes(predictions);
+                } else {
+                    mostrarSemResultados();
+                }
+            });
+        } else {
+            // Fallback se Google Maps não estiver disponível
+            mostrarSemResultados();
+        }
+    }, 300);
+}
+
+// Mostrar sugestões
+function mostrarSugestoes(predictions) {
+    const container = document.getElementById('layerSugestoes');
+    
+    if (predictions.length === 0) {
+        mostrarSemResultados();
+        return;
+    }
+    
+    const html = predictions.map(prediction => {
+        const mainText = prediction.structured_formatting.main_text;
+        const secondaryText = prediction.structured_formatting.secondary_text;
+        
+        return `
+            <div class="layer-auto-complete-endereco-suggestion" onclick="selecionarEndereco('${prediction.description.replace(/'/g, "\\'")}')">
+                <div class="layer-auto-complete-endereco-suggestion-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="layer-auto-complete-endereco-suggestion-content">
+                    <p class="layer-auto-complete-endereco-suggestion-title">${mainText}</p>
+                    <p class="layer-auto-complete-endereco-suggestion-subtitle">${secondaryText || ''}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    container.innerHTML = html;
+}
+
+// Mostrar mensagem sem resultados
+function mostrarSemResultados() {
+    document.getElementById('layerSugestoes').innerHTML = `
+        <div class="layer-auto-complete-endereco-empty">
+            Nenhum endereço encontrado
+        </div>
+    `;
+}
+
+// Selecionar endereço
+function selecionarEndereco(endereco) {
+    enderecoSelecionado = endereco;
+    document.getElementById('layerEnderecoInput').value = endereco;
+    confirmarEndereco();
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar serviços quando o documento carregar
+    setTimeout(initAutoCompleteServices, 1000);
+    
+    // Listener para o input de busca
+    const inputBusca = document.getElementById('layerEnderecoInput');
+    if (inputBusca) {
+        inputBusca.addEventListener('input', function(e) {
+            buscarEnderecos(e.target.value);
+        });
+        
+        // Confirmar ao pressionar Enter
+        inputBusca.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                confirmarEndereco();
+            }
+        });
+    }
+});
+
+
+
+// Variáveis globais para gerenciar destinos
+let destinosAdicionais = [];
+let destinoIdCounter = 1;
+let elementoArrastando = null;
+
+// Função para adicionar novo destino
+function adicionarDestino() {
+    const novoDestino = {
+        id: `destino-adicional-${destinoIdCounter}`,
+        numero: destinosAdicionais.length + 1,
+        endereco: ''
+    };
+    
+    destinosAdicionais.push(novoDestino);
+    destinoIdCounter++;
+    
+    renderizarDestinosAdicionais();
+}
+
+// Função para remover destino
+function removerDestino(id) {
+    destinosAdicionais = destinosAdicionais.filter(d => d.id !== id);
+    renderizarDestinosAdicionais();
+}
+
+// Função para renderizar destinos adicionais
+function renderizarDestinosAdicionais() {
+    // Verificar se o container existe, se não, criar
+    let container = document.querySelector('.auto-complete-solic-destinos-adicionais');
+    if (!container) {
+        const addButton = document.querySelector('.auto-complete-solic-add-destination');
+        if (!addButton) return;
+        
+        container = document.createElement('div');
+        container.className = 'auto-complete-solic-destinos-adicionais';
+        addButton.parentNode.insertBefore(container, addButton);
+    }
+    
+    // Limpar container
+    container.innerHTML = '';
+    
+    // Renderizar cada destino
+    destinosAdicionais.forEach((destino, index) => {
+        const destinoElement = criarElementoDestino(destino, index);
+        container.appendChild(destinoElement);
+    });
+    
+    // Adicionar listeners após renderizar
+    setTimeout(() => {
+        atualizarListenersDestinos();
+    }, 100);
+}
+
+// Função para criar elemento de destino
+function criarElementoDestino(destino, index) {
+    const div = document.createElement('div');
+    div.className = 'auto-complete-solic-destino-item';
+    div.draggable = true;
+    div.dataset.destinoId = destino.id;
+    
+    div.innerHTML = `
+        <div class="auto-complete-solic-destino-header">
+            <div class="auto-complete-solic-destino-titulo">
+                <svg class="auto-complete-solic-destino-drag" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 10h2v2H7v-2zm0-4h2v2H7V6zm0 8h2v2H7v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm0-8h2v2h-2V6zm4 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0-8h2v2h-2V6z"/>
+                </svg>
+                <span class="auto-complete-solic-destino-numero">${index + 1}</span>
+                <span>Parada adicional</span>
+            </div>
+            <div class="auto-complete-solic-destino-acoes">
+                <button class="auto-complete-solic-destino-remover" onclick="removerDestino('${destino.id}')" title="Remover destino">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="auto-complete-solic-destino-field">
+            <svg class="auto-complete-solic-destino-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <input 
+                type="text" 
+                class="auto-complete-solic-destino-input" 
+                id="${destino.id}-input"
+                placeholder="Digite o endereço da parada ${index + 1}"
+                value="${destino.endereco}"
+                readonly
+                autocomplete="off"
+            >
+        </div>
+    `;
+    
+    return div;
+}
+
+// Função para atualizar listeners dos destinos
+function atualizarListenersDestinos() {
+    // Listeners para arrastar
+    document.querySelectorAll('.auto-complete-solic-destino-item').forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+        item.addEventListener('dragenter', handleDragEnter);
+        item.addEventListener('dragleave', handleDragLeave);
+    });
+    
+    // Listeners para campos de input
+    document.querySelectorAll('.auto-complete-solic-destino-input').forEach(input => {
+        input.addEventListener('click', function() {
+            const destinoId = this.id.replace('-input', '');
+            abrirLayerAutoCompleteDestino(destinoId);
+        });
+    });
+}
+
+// Funções de arrastar e soltar
+function handleDragStart(e) {
+    elementoArrastando = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function handleDragEnd(e) {
+    this.classList.remove('dragging');
+    
+    document.querySelectorAll('.auto-complete-solic-destino-item').forEach(item => {
+        item.classList.remove('drag-over');
+    });
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    
+    e.dataTransfer.dropEffect = 'move';
+    
+    const afterElement = getDragAfterElement(this.parentNode, e.clientY);
+    if (afterElement == null) {
+        this.parentNode.appendChild(elementoArrastando);
+    } else {
+        this.parentNode.insertBefore(elementoArrastando, afterElement);
+    }
+    
+    return false;
+}
+
+function handleDrop(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+    
+    // Atualizar ordem no array
+    const novosDestinos = [];
+    document.querySelectorAll('.auto-complete-solic-destino-item').forEach(item => {
+        const destinoId = item.dataset.destinoId;
+        const destino = destinosAdicionais.find(d => d.id === destinoId);
+        if (destino) {
+            novosDestinos.push(destino);
+        }
+    });
+    
+    destinosAdicionais = novosDestinos;
+    renderizarDestinosAdicionais();
+    
+    return false;
+}
+
+function handleDragEnter(e) {
+    this.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+    this.classList.remove('drag-over');
+}
+
+// Função auxiliar para determinar posição do drop
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.auto-complete-solic-destino-item:not(.dragging)')];
+    
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+// Função modificada para abrir autocomplete para destinos adicionais
+function abrirLayerAutoCompleteDestino(destinoId) {
+    campoAtual = destinoId;
+    const layer = document.getElementById('layerAutoCompleteEndereco');
+    const input = document.getElementById('layerEnderecoInput');
+    const titulo = document.getElementById('layerTitulo');
+    
+    // Encontrar o destino
+    const destino = destinosAdicionais.find(d => d.id === destinoId);
+    const index = destinosAdicionais.findIndex(d => d.id === destinoId);
+    
+    // Definir título
+    titulo.textContent = `Parada adicional ${index + 1}`;
+    
+    // Pegar valor atual
+    input.value = destino ? destino.endereco : '';
+    
+    // Abrir layer
+    layer.classList.add('active');
+    
+    // Focar no input após animação
+    setTimeout(() => {
+        input.focus();
+        if (destino && destino.endereco) {
+            buscarEnderecos(destino.endereco);
+        }
+    }, 300);
+}
+// FIM AUTO COMPLETE ENDEREÇO
+
+
+
+
+let isFrontCamera = true; // Define a câmera inicial como frontal
+let currentStream = null; // Armazena a stream atual da câmera
+
+function ativarCameraOCR() {
+
+    $(".modal-camera").fadeIn(100);
+    $(".modal-camera .confirmacao").css("bottom","0");
+
+    iniciarCamera(); // Inicia a câmera com a configuração atual
+}
+
+function iniciarCamera() {
+    const areaCamera = document.getElementById("areaCamera");
+
+    // Adiciona o elemento de vídeo para exibir o feed da câmera
+    const video = document.createElement("video");
+    video.setAttribute("autoplay", "true");
+    video.style.width = "100%";
+    video.style.height = "100%";
+    areaCamera.innerHTML = ""; // Limpa qualquer conteúdo anterior
+    areaCamera.appendChild(video);
+
+    // Para a stream atual, se existir
+    if (currentStream) {
+        currentStream.getTracks().forEach((track) => track.stop());
+    }
+
+    // Configurações de vídeo com base na câmera selecionada
+    const constraints = {
+        video: {
+            facingMode: isFrontCamera ? "user" : "environment", // Alterna entre frontal e traseira
+        },
+    };
+
+    // Acessa a câmera do dispositivo
+    /*
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then((stream) => {
+            currentStream = stream; // Salva a nova stream
+            video.srcObject = stream;
+
+            // Inicia o reconhecimento da placa
+            processarPlaca(video);
+        })
+        .catch((error) => {
+            console.error("Erro ao acessar a câmera:", error);
+            alert("Não foi possível acessar a câmera. Verifique as permissões do dispositivo e se o dispositivo suporta múltiplas câmeras.");
+        });
+    */
+}
+
+function trocarCamera() {
+    // Alterna entre câmera frontal e traseira
+    isFrontCamera = !isFrontCamera;
+
+    // Reinicia a câmera com a nova configuração
+    iniciarCamera();
+}
+
+function desligarCamera() {
+  const areaCamera = document.getElementById("areaCamera");
+
+  // Para a stream atual, se existir
+  if (currentStream) {
+      currentStream.getTracks().forEach((track) => track.stop());
+      currentStream = null; // Remove a referência à stream
+  }
+
+  // Limpa o conteúdo da área de câmera
+  areaCamera.innerHTML = "";
+
+  console.log("Câmera desligada e recursos liberados.");
+
+  $(".modal-camera .confirmacao").css("bottom","-300%");
+                $(".modal-camera").fadeOut(500);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var controleD;
-
-
-
 
 function abrirModalDetalhes(id, caso, valorChaves, grupo) {
 
